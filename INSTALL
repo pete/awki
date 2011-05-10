@@ -1,0 +1,30 @@
+################################################################################
+# INSTALL - install notes for awkiawki
+# $Id: INSTALL,v 1.2 2002/11/18 10:44:43 olt Exp $
+################################################################################
+# Copyright (c) 2002 Oliver Tonnhofer (olt@bogosoft.com)
+# See the file `COPYING' for copyright notice.
+################################################################################
+
+0.) Install HTTP-Server with CGI support (e.g. apache, thttpd).
+
+1.) Copy awki.cgi, parser.awk and special_parser.awk to your cgi-bin/ and make
+    sure they are executable for your Webserver (chmod ugo+x).
+
+2.) Check the shebang in the fist line of the scripts (#!/usr/bin/awk)
+    and change to you local settings.
+	(HINT: use mawk if available, it is faster)
+	
+3.) Create data/ directory in your cgi-bin/ and make sure it is read- and
+    writeable for awki.cgi.
+	
+4.) Copy awki.png to the root directory of your Webserver.
+
+5.) Copy awki.conf to cgi-bin/ and edit it to customize awkiawki.
+
+5.1) If you enabled rcs, create a RCS/ directory in data/.
+
+6.) Call http://localhost/cgi-bin/awki.cgi and edit your fist page to
+    see if the installation was successful.
+
+7.) Have fun with AwkiAwki :)
