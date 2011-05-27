@@ -26,8 +26,8 @@ BEGIN {
 	#	max_post: Bytes accept by POST requests (to avoid DOS).
 	localconf["max_post"] = 100000
 	#	write_protection: Regex for write protected files
-	#   	e.g.: "*", "PageOne|PageTwo|^.*NonEditable" 
-	#		HINT: to edit these protected pages, upload a .htaccess 
+	#   	e.g.: "*", "PageOne|PageTwo|^.*NonEditable"
+	#		HINT: to edit these protected pages, upload a .htaccess
 	#		      protected awki.cgi script with write_protection = ""
 	localconf["write_protection"] = ""
 	#   css: HTTP URL for external CSS file.
@@ -43,35 +43,39 @@ BEGIN {
 	#            --- default options ---
 
 	scriptname = ENVIRON["SCRIPT_NAME"]
-	
+
 	if (localconf["path"])
 		ENVIRON["PATH"] = localconf["path"] ":" ENVIRON["PATH"]
 
 	#load external configfile
 	load_config(scriptname)
-	
+
 	# PATH_INFO contains page name
-	if (ENVIRON["PATH_INFO"]) {	
+	if (ENVIRON["PATH_INFO"]) {
 		query["page"] = ENVIRON["PATH_INFO"]
 	}
-	
+
 	if (ENVIRON["REQUEST_METHOD"] == "POST") {
-        if (ENVIRON["CONTENT_TYPE"] == "application/x-www-form-urlencoded") {
+		if (ENVIRON["CONTENT_TYPE"] == "application/x-www-form-urlencoded") {
 			if (ENVIRON["CONTENT_LENGTH"] < localconf["max_post"])
 				bytes = ENVIRON["CONTENT_LENGTH"]
 			else
 				bytes = localconf["max_post"]
-            cmd = "dd ibs=1 count=" bytes " 2>/dev/null"
-            cmd | getline query_str
-            close (cmd)
+			cmd = "F=`mktemp`; " \
+				"dd ibs=" bytes " status=noxfer count=1 of=$F" \
+				">/dev/null 2>/dev/null && " \
+				"cat $F && " \
+				"rm -f $F"
+			cmd | getline query_str
+			close (cmd)
 		}
-		if (ENVIRON["QUERY_STRING"]) 
+		if (ENVIRON["QUERY_STRING"])
 			query_str = query_str "&" ENVIRON["QUERY_STRING"]
 	} else {
-		if (ENVIRON["QUERY_STRING"])	
+		if (ENVIRON["QUERY_STRING"])
 			query_str = ENVIRON["QUERY_STRING"]
 	}
-	
+
 	n = split(query_str, querys, "&")
 	for (i=1; i<=n; i++) {
 		split(querys[i], data, "=")
@@ -83,18 +87,18 @@ BEGIN {
 	query["revision"] = clear_revision(query["revision"])
 	query["revision2"] = clear_revision(query["revision2"])
 	query["string"] = clear_str(decode(query["string"]))
-	
+
 	if (!localconf["rcs"])
 		query["revision"] = 0
 
 	if (query["page"] == "")
 		query["page"] = localconf["default_page"]
-	
+
 	query["filename"] = localconf["datadir"] query["page"]
-	
+
 	#check if page is editable
 	special_pages = "FullSearch|PageList|RecentChanges"
-	
+
 	if (query["page"] ~ "("special_pages")") {
 		special_page = 1
 	} else if (!localconf["write_protection"] || query["page"] !~ "("localconf["write_protection"]")") {
@@ -103,7 +107,7 @@ BEGIN {
 
 
 	header(query["page"])
-	
+
 	if (query["edit"] && page_editable)
 		edit(query["page"], query["filename"], query["revision"])
 	else if (query["save"] && query["text"] && page_editable)
@@ -118,16 +122,16 @@ BEGIN {
 		special_history(query["page"], query["filename"])
 	else if (query["page"] && query["diff"] && query["revision"])
 		special_diff(query["page"], query["filename"], query["revision"], query["revision2"])
-	else 
+	else
 		parse(query["page"], query["filename"], query["revision"])
 
 	footer(query["page"])
-	
+
 }
 
 # print header
 function header(page) {
-	print "Content-type: text/html\n"
+	print "Content-type: text/html; charset=utf-8\n"
 	print "<html>\n<head>\n<title>" page "</title>"
 	if (localconf["css"])
 		print "<link rel=\"stylesheet\" href=\"" localconf["css"] "\">"
@@ -179,7 +183,7 @@ function special_diff(page, filename, revision, revision2,   revisions) {
 			revisions = "-r" revision
 		system("rcsdiff "revisions" -u "filename" | " localconf["special_parser"] " -v special_diff='"page"'")
 	}
-}	
+}
 
 # print edit form
 function edit(page, filename, revision,   cmd) {
@@ -231,7 +235,7 @@ function save(page, text, comment, filename,   dtext, date) {
 # list all pages
 function special_index(datadir) {
 	system("ls -1 " datadir " | " localconf["special_parser"] " -v special_index=yes")
-	
+
 }
 
 # list pages with last modified time (sorted by date)
@@ -263,7 +267,7 @@ function special_history(name, filename) {
 # *** !Important for Security! ***
 function clear_str(str) {
 	gsub(/['`"]/, "", str)
-	if (length(str) > 80) 
+	if (length(str) > 80)
 		return substr(str, 1, 80)
 	else
 		return str
@@ -289,18 +293,18 @@ function clear_revision(str) {
 
 # decode urlencoded string
 function decode(text,   hex, i, hextab, decoded, len, c, c1, c2, code) {
-	
+
 	split("0 1 2 3 4 5 6 7 8 9 a b c d e f", hex, " ")
 	for (i=0; i<16; i++) hextab[hex[i+1]] = i
 
 	# urldecode function from Heiner Steven
 	# http://www.shelldorado.com/scripts/cmds/urldecode
 
-	# decode %xx to ASCII char 
+	# decode %xx to ASCII char
 	decoded = ""
 	i = 1
 	len = length(text)
-	
+
 	while ( i <= len ) {
 	    c = substr (text, i, 1)
 		if ( c == "%" ) {
@@ -323,13 +327,13 @@ function decode(text,   hex, i, hextab, decoded, len, c, c1, c2, code) {
 	    decoded = decoded c
 	    ++i
 	}
-	
+
 	# change linebreaks to \n
 	gsub(/\r\n/, "\n", decoded)
-	
+
 	# remove last linebreak
 	sub(/[\n\r]*$/,"",decoded)
-	
+
 	return decoded
 }
 
@@ -344,21 +348,21 @@ function load_config(script,   configfile,key,value) {
 	sub(/\.[^.]*$/,"", configfile)
 	# append .conf suffix
 	configfile = configfile ".conf"
-	
+
 	#read configfile
 	while((getline < configfile) >0) {
 		if ($0 ~ /^#/) continue #ignore comments
-		
+
 		if (match($0,/[ \t]*=[ \t]*/)) {
 			key = substr($0, 1, RSTART-1)
 			sub(/^[ \t]*/, "", key)
 			value = substr($0, RSTART+RLENGTH)
 			sub(/[ \t]*$/, "", value)
 			if (sub(/^"/, "", value))
-				sub(/"$/, "", value) 
+				sub(/"$/, "", value)
 			#set localconf variables
 			localconf[key] = value
-		
+
 		}
 	}
-}	
+}
