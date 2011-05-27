@@ -2,19 +2,21 @@
 # AUTHORS - authors and contributors of awkiawki
 # $Id: AUTHORS,v 1.4 2002/11/18 10:32:44 olt Exp $
 ################################################################################
-# Copyright (c) 2002 Oliver Tonnhofer (olt@bogosoft.com)
+# Copyright (c) 2002 Oliver Tonnhofer (olt/bogosoft.com)
 # See the file `COPYING' for copyright notice.
 ################################################################################
 
 Author:
-	Oliver Tonnhofer <olt@bogosoft.com>
+	Oliver Tonnhofer <olt/bogosoft.com>
 
 Contributors:
 	- suggestions, testing, bug reports
-		Michael Elkins <me@sigpipe.org>
-		Francis Daly <francis@daoine.org>
-		Jim Hart <jhart@bates.edu>
+		Michael Elkins <me/sigpipe.org>
+		Francis Daly <francis/daoine.org>
+		Jim Hart <jhart/bates.edu>
+	- A couple of fixes and features
+		Pete Elmore <pete/debu.gs>
 
-I would also like to thank Heiner Steven <heiner.steven@nexgo.de> for the
+I would also like to thank Heiner Steven <heiner.steven/nexgo.de> for the
 permisson to use code from his urldecode script
 <http://www.shelldorado.com/scripts/cmds/urldecode>
