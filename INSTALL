@@ -6,7 +6,7 @@
 # See the file `COPYING' for copyright notice.
 ################################################################################
 
-0.) Install HTTP-Server with CGI support (e.g. apache, thttpd).
+0.) Install HTTP-Server with CGI support (e.g. apache, thttpd, lighttpd).
 
 1.) Copy awki.cgi, parser.awk and special_parser.awk to your cgi-bin/ and make
     sure they are executable for your Webserver (chmod ugo+x).
