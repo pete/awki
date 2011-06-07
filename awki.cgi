@@ -207,7 +207,7 @@ function edit(page, filename, revision,   cmd) {
 	if (localconf["rcs"])
 		print "Comment: <input type=\"text\" name=\"string\" maxlength=80 size=50>"
 	if (! localconf["always_convert_spaces"])
-		print "<br>Convert runs of 8 spaces to Tab <input type=\"checkbox\" name=\"convertspaces\">"
+		print "<br>Convert runs of 8 spaces to Tab <input type=\"checkbox\" name=\"convertspaces\" checked>"
 	print "</form>"
 	print "<small><strong>Emphases:</strong> ''<em>italic</em>''; '''<strong>bold</strong>'''; \
 '''''<strong><em>bold italic</em></strong>'''''; ''<em>mixed '''<strong>bold</strong>'''\
