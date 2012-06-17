@@ -1,0 +1,84 @@
+/* 
+ * You can make AwkiAwki look pretty fancy.  This one goes heavy on the rounded
+ * corners, and makes headers stand out more.
+ */
+
+html { background-color: #333; }
+body {
+	background-color: #eee;
+	border-radius: 1em;
+	padding: 0.5em;
+}
+
+pre {
+	border: 2px solid #38a;
+	padding: 0.3em;
+	background-color: #000008;
+	color: #fff8e0;
+	font-weight: bold;
+	border-radius: 0.3em;
+	margin: 0px;
+}
+
+a {
+	font-weight: bold;
+	font-size: 1.07em;
+	text-decoration: none;
+	background-color: #e0e0e0;
+	border-radius: 0.4em;
+	padding: 0.1em;
+}
+a:link { color: #00d; }
+a:visited { color: #006; }
+a:active { color: #04e; }
+a:hover { color: #f80; background-color: white; }
+pre a:hover, h1 a:hover, h2 a:hover { color: #f80; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 { 
+	background-color: transparent;
+}
+
+h1 {
+	color: #f80;
+	background-color: #333;
+	border-radius: 0.3em;
+	border: 3px solid #aaa;
+	height: 50px;
+	font-size: 40px;
+}
+img { border-radius: 0.4em; }
+h1 a:link {
+	text-decoration: none;
+	color: #ccc;
+}
+h1 a:visited {
+	text-decoration: none;
+	color: #bbb;
+}
+h1 a:hover {
+	color: #f80;
+}
+
+h2 {
+	color: #004;
+	padding-left: 0.75em;
+	background-color: #ccc;
+	border-radius: 0.75em;
+	border: 2px solid #888;
+}
+
+h3 {
+	color: #004;
+	background-color: #ccc;
+	border-radius: 0.75em;
+	padding: 0.15em;
+	padding-left: 1em;
+	border: 1px dotted #888;
+}
+
+h4 { padding-left: 0.5em; }
+
+p {
+	margin-left: 1em;
+}

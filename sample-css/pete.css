@@ -1,0 +1,13 @@
+/* The CSS Pete uses on his wiki */
+
+pre {
+	border: 1px dotted green;
+	background-color: #000008;
+	color: #fff8e0;
+	font-weight: bold;
+}
+
+pre a:link { color: #d00; }
+pre a:visited { color: #800; }
+pre a:active { color: #e40; }
+pre a:hover { color: #f80; }
