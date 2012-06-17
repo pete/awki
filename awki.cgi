@@ -97,7 +97,7 @@ BEGIN {
 	query["filename"] = localconf["datadir"] query["page"]
 
 	#check if page is editable
-	special_pages = "FullSearch|PageList|RecentChanges"
+	special_pages = "FullSearch|PageList|RecentChanges|ChangesRSS"
 
 	if (query["page"] ~ "("special_pages")") {
 		special_page = 1
@@ -105,7 +105,13 @@ BEGIN {
 		page_editable = 1
 	}
 
+	if(query["page"] == "ChangesRSS")
+		rss_page()
+	else
+		html_page()
+}
 
+function html_page() {
 	header(query["page"])
 
 	if (query["edit"] && page_editable)
@@ -126,13 +132,57 @@ BEGIN {
 		parse(query["page"], query["filename"], query["revision"])
 
 	footer(query["page"])
+}
 
+function rss_page(   i,fn,date,link,host,proto,base_url) {
+	host = ENVIRON["HTTP_HOST"]
+	if("HTTPS" in ENVIRON)
+		proto = "https"
+	else
+		proto = "http"
+
+	base_url = proto "://" host scriptname
+
+	#print "Content-Type: text/plain; charset=utf-8\n"
+
+	print "Content-Type: application/rss+xml; charset=utf-8\n"
+	print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+	print "<rss version=\"2.0\"><channel>"
+	print "<title>AwkiAwki at " base_url "</title>"
+	print "<link>" base_url "</link>"
+	print "<description>Recent Changes RSS feed for wiki</description>"
+
+	i = 0
+	while(i < 10 && ("ls -tlL "localconf["datadir"] | getline) > 0) {
+		if($9 ~ /^[A-Z][a-z]+[A-Z][A-Za-z]*$/) {
+			i++
+
+			fn = $9
+			date = $6 " " $7 " " $8 # ls -l's timstamp format can die in a fire.
+			link = base_url "/" fn
+
+			print "<item><title>" fn "</title>"
+			# FIXME: Getting ls to *portably* spit out an RFC-822 date isn't
+			# possible.  feedvalidator.org doesn't seem to mind, so we'll ignore
+			# the pubDate tag.
+			#print "<pubDate>" date "</pubDate>"
+			print "<author>awki@"host" (AwkiAwki users)</author>"
+			print "<description>"fn" update at "date"</description>"
+			gsub(/[^0-9a-zA-Z]/, "_", date)
+			print "<link>"link"</link><guid>"link"?"date"</guid>"
+			print "</item>"
+		}
+	}
+
+	print "</channel></rss>\n"
 }
 
 # print header
 function header(page) {
 	print "Content-type: text/html; charset=utf-8\n"
 	print "<html>\n<head>\n<title>" page "</title>"
+	print "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"Wiki Changes RSS\" href=\""scriptname"/ChangesRSS\"></link>"
+
 	if (localconf["css"])
 		print "<link rel=\"stylesheet\" href=\"" localconf["css"] "\">"
 	if (query["save"])
@@ -150,6 +200,7 @@ function footer(page) {
 	print "<a href=\""scriptname"/"localconf["default_page"]"\">"localconf["default_page"]"</a>"
 	print "<a href=\""scriptname"/PageList\">PageList</a>"
 	print "<a href=\""scriptname"/RecentChanges\">RecentChanges</a>"
+	print "<a href=\""scriptname"/ChangesRSS\">ChangesRSS</a>"
 	if (localconf["rcs"] && !special_page)
 		print "<a href=\""scriptname"/"page"?history=true\">PageHistory</a>"
 	print "<form action=\""scriptname"/FullSearch\" method=\"GET\" align=\"right\">"
