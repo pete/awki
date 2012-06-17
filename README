@@ -1,11 +1,15 @@
-AwkiAwki comes from http://awkiawki.bogosoft.com/ .  (See CREDITS.)  It
+AwkiAwki comes from http://awkiawki.bogosoft.com/ .  (See AUTHORS.)  It
 is the fastest wiki I've ever used, and the easiest to deploy.  It is
 patterned after the original wiki by Ward Cunningham, found at
 http://c2.com/cgi/wiki .
 
-This repo is my version, which includes some minor patches.  The
-differences between the AwkiAwki in this repo and the "stock" version
-are as follows:
+This repo is my version, which includes some minor patches.
+
+See AUTHORS for the credits, COPYING for license terms, and INSTALL for
+installation instructions.
+
+The differences between the AwkiAwki in this repo and the "stock"
+version are as follows:
 
 Features added:
 	* RSS feed for recent changes
