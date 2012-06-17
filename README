@@ -1,0 +1,33 @@
+AwkiAwki comes from http://awkiawki.bogosoft.com/ .  (See CREDITS.)  It
+is the fastest wiki I've ever used, and the easiest to deploy.  It is
+patterned after the original wiki by Ward Cunningham, found at
+http://c2.com/cgi/wiki .
+
+This repo is my version, which includes some minor patches.  The
+differences between the AwkiAwki in this repo and the "stock" version
+are as follows:
+
+Features added:
+	* RSS feed for recent changes
+	* CSS samples for making the wiki look good (or at least different;
+	  YMMV).
+
+Fixes:
+	* Silence dd's output; I don't know of a way to do this with
+	  GNU's dd without using a tempfile, so we use a tempfile.
+	* Always claim the text is UTF-8 instead of leaving it up to the
+	  browser, which does the wrong thing usually.
+
+Questionable value:
+	* Some doc changes
+	* Check the "convert eight spaces to tab" by default, since most
+	  browsers don't do tabs by default.
+
+Possible future changes:
+	* Per-page RSS feeds
+	* Busybox's awk and mawk seem to have issues with AwkiAwki.  I
+	  haven't tried nawk.  Fixing this may involve patching the awk
+	  implementations rather than AwkiAwki.
+	* Make the page regex more permissive.  This is somewhat
+	  tedious, as the regex shows up everywhere, but the penalty for
+	  false positives is lower than that for false negatives.
