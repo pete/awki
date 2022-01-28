@@ -26,6 +26,7 @@ Questionable value:
 	* Some doc changes
 	* Check the "convert eight spaces to tab" by default, since most
 	  browsers don't do tabs by default.
+	* Added IPFS links
 
 Possible future changes:
 	* Per-page RSS feeds

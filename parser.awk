@@ -30,7 +30,7 @@ BEGIN {
 
 # generate links
 /[A-Z][a-z]+[A-Z][A-Za-z]*/ ||
-/(https?|ftp|gopher|mailto|news):/ {
+/(https?|ftp|gopher|mailto|news|ipfs):/ {
 	tmpline = ""
 	for(i=1;i<=NF;i++) {
 		field = $i 
@@ -39,8 +39,8 @@ BEGIN {
 			&& field !~ /https?:\/\/[^\t]*\.(jpg|jpeg|gif|png)''''''/) {
 			sub(/https?:\/\/[^\t]*\.(jpg|jpeg|gif|png)/, "<img src=\"&\">",field)
 		# links for mailto, news and http, ftp and gopher URLs
-		}else if (field ~ /((https?|ftp|gopher):\/\/|(mailto|news):)[^\t]*/) {
-			sub(/((https?|ftp|gopher):\/\/|(mailto|news):)[^\t]*[^.,?;:'")\t]/, "<a href=\"&\">&</a>",field)
+		}else if (field ~ /((https?|ftp|gopher|ipfs):\/\/|(mailto|news):)[^\t]*/) {
+			sub(/((https?|ftp|gopher|ipfs):\/\/|(mailto|news):)[^\t]*[^.,?;:'")\t]/, "<a href=\"&\">&</a>",field)
 			# remove mailto: in link description
 			sub(/>mailto:/, ">",field)
 		# links for awkipages
