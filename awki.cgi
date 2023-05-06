@@ -187,6 +187,7 @@ function header(page) {
 		print "<link rel=\"stylesheet\" href=\"" localconf["css"] "\">"
 	if (query["save"])
 		print "<meta http-equiv=\"refresh\" content=\"2,URL="scriptname"/"page"\">"
+	print "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">"
 	print "</head>\n<body>"
 	print "<h1>"localconf["img_tag"]
 	print "<a href=\""scriptname"/FullSearch?string="page"\">"page"</a></h1><hr>"
