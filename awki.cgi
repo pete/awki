@@ -267,7 +267,8 @@ and italic</em>''<br>\
 <strong>Headings:</strong> -Title 1 ; --Title 2 ; ---Title 3<br>\
 <strong>Preformatted Text:</strong> *space*Text<br>\
 <strong>Lists:</strong> tab(s) and one of * bullets; 1 numbered items<br>\
-<strong>Links:</strong> JoinCapitalizedWords; url (http, https, ftp, gopher, mailto, news)</small>"
+<strong>Links:</strong> JoinCapitalizedWords; url (http, https, ftp, gopher, mailto, news)<br>\
+<strong>Quotes:</strong> &gt; text</small>"
 }
 
 # save page
