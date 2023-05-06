@@ -76,6 +76,7 @@ BEGIN {
 
 /^\t+[*]/ { close_tags("list"); parse_list("ul", "ol"); print; next;}
 /^\t+[1]/ { close_tags("list"); parse_list("ol", "ul"); print; next;}
+/^\&gt; / { $0 = "<blockquote>" substr($0, 5) "</blockquote>"; close_tags(); print; next }
 
 /^ / { 
 	close_tags("pre");
