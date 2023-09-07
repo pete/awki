@@ -1,0 +1,75 @@
+/*
+	I'm using an on-device setup for my DevTerm.  This is the stylesheet
+	I'm using there:  the colors resemble acme's, and the text is adjusted
+	to ensure that it's readable on-device.
+
+	AwkiAwki was ridiculously fast even on old hardware, so it doesn't eat
+	much battery on a little ARM device.  It's also nice to be able to share
+	the notes with anyone on the local network.  (Do remember to keep
+	backups if you're just opening it to the world on a mobile device.) One
+	nice thing about using it on a portable device is that, since it's a CGI
+	script, if it's not running, it uses zero energy.  Since it has no
+	JavaScript, AwkiAwki works flawlessly from mothra, w3m, lynx, abaco,
+	etc.
+
+	More info about the DevTerm:  https://www.clockworkpi.com/devterm ,
+	https://github.com/clockworkpi/DevTerm .  acme is an editor developed
+	for the Plan 9 operating system; it has been ported to both Unix-likes
+	(as part of plan9port) and Inferno.  There's a lot of information about
+	it here:  http://acme.cat-v.org/ .
+*/
+pre {
+	border: 2px solid #38a;
+	background-color: #000008;
+	color: #fff8e0;
+	font-weight: bold;
+	padding: 0.3em;
+	padding-left: 0px;
+	border-radius: 0.2em;
+}
+
+a:link { color: #c00; }
+a:visited { color: #600; }
+a:active { color: #e40; }
+a:hover { color: #f80; background-color: white; }
+
+a { text-decoration: none; font-weight: 500; padding: 0.05em; border-radius: 0.2em;}
+
+pre a:link { color: #0072ff; }
+pre a:visited { color: #1082ff; }
+pre a:active { color: #e40; }
+pre a:hover { color: #f80; background-color: inherit; }
+
+pre a { font-weight: inherit; }
+
+hr {
+	background-color: #222;
+	border: 0px solid red;
+	height: 2px;
+}
+
+body {
+	color: #101018;
+	background-color: #ffffea;
+}
+
+p, li, h1, h2, h3, h4, h5, h6, blockquote {
+	max-width: 40em;
+}
+h1, h2, h3, h4, h5, h6 {
+	background-color: #eaffff;
+}
+
+blockquote { background-color: rgba(0,0,0,0.15); padding: 0.25em; margin-left: 1em; }
+
+h2 {
+	border-left: 1px solid grey;
+	border-top: 1px solid grey;
+	border-top-left-radius: 0.2em;
+
+	padding-left: 0.2em;
+	padding-top: 0.2em;
+}
+h2 a { text-decoration: none; }
+
+textarea { max-height: 80vh; }
