@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+#!/bin/awk -f
 ################################################################################
 # special_parser.awk - parsing script for awkiawki
 # $Id: special_parser.awk,v 1.5 2003/07/07 11:22:55 olt Exp $

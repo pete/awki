@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+#!/bin/awk -f
 ################################################################################
 # awkiawki - wikiwiki clone written in (n|g|m)awk
 # $Id: awki.cgi,v 1.45 2004/07/13 16:34:45 olt Exp $
