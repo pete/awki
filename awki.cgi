@@ -213,12 +213,12 @@ function footer(page) {
 
 # send page to parser script
 function parse(name, filename, revision) {
-	if (system("[ -f "filename" ]") == 0 ) {
+	if (system("test -f "filename) == 0 ) {
 		if (revision) {
 			print "<em>Displaying old version ("revision") of <a href=\""scriptname"/" name "\">"name"</a>.</em>"
-			system("co -q -p'"revision"' " filename " | "localconf["parser"] " -v datadir='"localconf["datadir"] "'")
+			system("co -q -p'"revision"' " filename " | "localconf["parser"] " -v 'datadir="localconf["datadir"] "'")
 		} else
-			system(localconf["parser"] " -v datadir='"localconf["datadir"] "' " filename)
+			system(localconf["parser"] " -v 'datadir=" localconf["datadir"] "' " filename)
 	}
 }
 
@@ -234,7 +234,7 @@ function special_diff(page, filename, revision, revision2,   revisions) {
 			revisions = "-r" revision " -r" revision2
 		else
 			revisions = "-r" revision
-		system("rcsdiff "revisions" -u "filename" | " localconf["special_parser"] " -v special_diff='"page"'")
+		system("rcsdiff "revisions" -u "filename" | " localconf["special_parser"] " -v 'special_diff="page"'")
 	}
 }
 
