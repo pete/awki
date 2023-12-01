@@ -61,11 +61,6 @@ BEGIN {
 				bytes = ENVIRON["CONTENT_LENGTH"]
 			else
 				bytes = localconf["max_post"]
-			cmd = "F=`mktemp`; " \
-				"dd ibs=" bytes " status=noxfer count=1 of=$F" \
-				">/dev/null 2>/dev/null && " \
-				"cat $F && " \
-				"rm -f $F"
 			cmd = "read -c " bytes
 			cmd | getline query_str
 			close (cmd)

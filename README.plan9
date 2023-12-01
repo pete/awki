@@ -1,0 +1,27 @@
+This is the minimal set of changes to get AwkiAwki to work properly
+under Plan 9.  I am not making heavy use of it at present; I just
+ported it to see where the problems started.  It turned out to be
+fairly simple to get it working:  ls(1) has slightly different output
+on Plan 9, date(1) works differently, and rc(1) treats '=' as a
+special character, so it has to be quoted.  The effort could be
+considererd a complete failure (since the intent was to figure out
+where the problems started, and I failed to do this, as I didn't run
+into any), or a success (since it resulted in working software).
+
+The easiest way to run it is probably to drop it into a directory,
+make a world-writable data directory, tweak the config to reflect the
+appropriate paths for your system, and then just point rc-httpd
+(http://werc.cat-v.org/docs/web-server-setup/rc-httpd) at it.  Normal
+CGI scripts work fine.
+
+One piece that is broken is page history.  This shouldn't be too hard
+to do with history(1) if you are running fossil.  I think cwfs works
+the same, but I'm running fossil everywhere.  Porting rcs might be
+non-trivial, but since git's been ported to Plan 9, it might be better
+to break the dependency on rcs.  This might be trivial:  the easiest
+way to check it is:
+	grep -n 'system\("(co|ci|rcsdiff|rlog)' *
+A couple of times, the ouptut is passed to special_parser.awk, and
+that'll need some changes similar to the changes required for ls(1).
+
+- Pete

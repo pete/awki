@@ -5,6 +5,10 @@ http://c2.com/cgi/wiki .
 
 This repo is my version, which includes some minor patches.
 
+If you can see this, you're viewing the Plan 9 version.  There are minor
+differences and it won't work under POSIX (Linux/*BSD) systems.  See
+README.plan9.
+
 See AUTHORS for the credits, COPYING for license terms, and INSTALL for
 installation instructions.
 
