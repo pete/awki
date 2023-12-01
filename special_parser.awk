@@ -22,9 +22,9 @@ BEGIN {
 		print "<pre>"
 } 
 
-special_changes && $9 ~ /^[A-Z][a-z]+[A-Z][A-Za-z]*$/ {
+special_changes && $10 ~ /^[A-Z][a-z]+[A-Z][A-Za-z]*$/ {
 	filenr++
-	print "<tr><td>" generate_link($9) "</td><td>"$7" "$6" "$8"</td></tr>"
+	print "<tr><td>" generate_link($10) "</td><td>"$8" "$7" "$9"</td></tr>"
 	if (filenr == special_changes)
 		exit
 }

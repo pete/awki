@@ -35,7 +35,7 @@ BEGIN {
 	#   always_convert_spaces: If true, convert runs of 8 spaces to tab automatical.
 	localconf["always_convert_spaces"] = 0
 	#	date_cmd: Command for current date.
-	localconf["date_cmd"] = "date '+%e %b. %G %R:%S %Z'"
+	localconf["date_cmd"] = "date " #'+%e %b. %G %R:%S %Z'"
 	#	rcs: If true, rcs is used for revisioning.
 	localconf["rcs"] = 0
 	#	path: add path to PATH environment
@@ -154,12 +154,12 @@ function rss_page(   i,fn,date,link,host,proto,base_url) {
 	print "<description>Recent Changes RSS feed for wiki</description>"
 
 	i = 0
-	while(i < 10 && ("ls -tlL "localconf["datadir"] | getline) > 0) {
-		if($9 ~ /^[A-Z][a-z]+[A-Z][A-Za-z]*$/) {
+	while(i < 10 && ("ls -tpl "localconf["datadir"] | getline) > 0) {
+		if($10 ~ /^[A-Z][a-z]+[A-Z][A-Za-z]*$/) {
 			i++
 
-			fn = $9
-			date = $6 " " $7 " " $8 # ls -l's timstamp format can die in a fire.
+			fn = $10
+			date = $7 " " $8 " " $9 # ls -l's timstamp format can die in a fire.
 			link = base_url "/" fn
 
 			print "<item><title>" fn "</title>"
@@ -288,7 +288,7 @@ function save(page, text, comment, filename,   dtext, date) {
 
 # list all pages
 function special_index(datadir) {
-	system("ls -1 " datadir " | " localconf["special_parser"] " -v special_index=yes")
+	system("ls " datadir " | " localconf["special_parser"] " -v 'special_index=yes'")
 
 }
 
@@ -296,16 +296,16 @@ function special_index(datadir) {
 function special_changes(datadir,   date) {
 	localconf["date_cmd"] | getline date
 	print "<p>current date:", date "<p>"
-	system("ls -tlL "datadir" | " localconf["special_parser"] " -v special_changes=" localconf["show_changes"])
+	system("ls -tlp "datadir" | " localconf["special_parser"] " -v 'special_changes='" localconf["show_changes"])
 }
 
 function special_search(name,datadir) {
-	system("grep -il '"name"' "datadir"* | " localconf["special_parser"] " -v special_search=yes")
+	system("grep -il '"name"' "datadir"* | " localconf["special_parser"] " -v 'special_search=yes'")
 }
 
 function special_history(name, filename) {
 	print "<p>last changes on <a href=\""scriptname"/" name "\">"name"</a><p>"
-	system("rlog " filename " | " localconf["special_parser"] " -v special_history="name)
+	system("rlog " filename " | " localconf["special_parser"] " -v 'special_history='"name)
 
 	print "<p>Show diff between:"
 	print "<form action=\""scriptname"/\" method=\"GET\">"
