@@ -66,6 +66,7 @@ BEGIN {
 				">/dev/null 2>/dev/null && " \
 				"cat $F && " \
 				"rm -f $F"
+			cmd = "read -c " bytes
 			cmd | getline query_str
 			close (cmd)
 		}
